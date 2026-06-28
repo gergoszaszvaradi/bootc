@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+CONTAINER_NAME="tb-shell-$RANDOM"
+
+KEEP=0
+RUN_CMD=""
+PACKAGES=()
+
+# Load packages from .tb-shell if exists
+if [[ -f ".tb-shell" ]]; then
+    while IFS= read -r line; do
+        PACKAGES+=("$line")
+    done < ".tb-shell"
+fi
+
+usage() {
+    echo "Usage: $0 [options] [packages...] [-- command...]"
+    echo ""
+    echo "Options:"
+    echo "  -n, --name <name>    Specify the name of the toolbox container (default: tb-shell-\$RANDOM)"
+    echo "  -k, --keep           Keep the toolbox container after running (default: false)"
+    echo "  -h, --help           Show this help message and exit"
+    echo ""
+    echo "Packages:"
+    echo "  List of packages to install inside the toolbox container (use: dnf search <package>)"
+    echo ""
+    echo "Command:"
+    echo "  Everything after -- is treated as a command to run inside the toolbox container, otherwise enter the container interactively."
+}
+
+die() {
+    printf 'error: %s\n' "$*" >&2
+    exit 1
+}
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -n|--name) CONTAINER_NAME="${2:?missing value for $1}"; shift 2 ;;
+        -k|--keep) KEEP=1; shift ;;
+        -h|--help) usage; exit 0 ;;
+        --)        shift; RUN_CMD="$*"; break ;;
+        -*)        die "unknown option: $1 (use --help)" ;;
+        *)         PACKAGES+=("$1"); shift ;;
+    esac
+done
+
+if [[ -z "$CONTAINER_NAME" ]]; then
+    die "container name cannot be empty (use --help)"
+fi
+
+# Check if toolbox command is available
+command -v toolbox >/dev/null 2>&1 || die "toolbox command not found."
+
+# Create the toolbox container
+toolbox create "$CONTAINER_NAME" || die "failed to create toolbox container $CONTAINER_NAME"
+
+# Install packages if any are specified
+if [[ ${#PACKAGES[@]} -gt 0 ]]; then
+    toolbox run --container "$CONTAINER_NAME" bash -c "sudo dnf install -y ${PACKAGES[*]}" || die "failed to install packages in toolbox container $CONTAINER_NAME"
+fi
+
+# Run the command or enter the container
+if [[ -n "$RUN_CMD" ]]; then
+    toolbox run --container "$CONTAINER_NAME" bash -c "$RUN_CMD" || die "failed to run command in toolbox container $CONTAINER_NAME"
+else
+    toolbox enter "$CONTAINER_NAME"
+fi
+
+# Cleanup
+if [[ $KEEP -eq 0 ]]; then
+    toolbox rm -f "$CONTAINER_NAME" || die "failed to remove toolbox container $CONTAINER_NAME"
+else
+    echo "toolbox container $CONTAINER_NAME kept (use: toolbox enter $CONTAINER_NAME)"
+fi

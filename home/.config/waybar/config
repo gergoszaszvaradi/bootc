@@ -1,0 +1,170 @@
+{
+  "layer": "top",
+  "modules-left": [
+    "sway/workspaces",
+    "tray",
+    "mpris"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "cpu",
+    "memory",
+    "temperature#cpu",
+    "temperature#gpu",
+    "disk",
+    "battery",
+    "wireplumber",
+    "custom/notification",
+    "idle_inhibitor",
+    "network",
+    "privacy",
+    "group/power"
+  ],
+  "tray": {
+    "spacing": 20
+  },
+  "mpris": {
+    "player": "spotify",
+	"format": "{player_icon} {artist} - {title}",
+	"player-icons": {
+		"default": "▶",
+		"spotify": " "
+	}
+  },
+  "cpu": {
+    "format": "  {usage}%",
+    "states": {
+      "warning": 75,
+      "critical": 90,
+    }
+  },
+  "memory": {
+    "format": "  {percentage}%",
+    "states": {
+      "warning": 75,
+      "critical": 90,
+    }
+  },
+  "temperature#cpu": {
+    "hwmon-path": "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon1/temp1_input",
+    "format": " {temperatureC}°C",
+    "tooltip-format": "CPU Temperature",
+  },
+  "temperature#gpu": {
+    "hwmon-path": "/sys/devices/pci0000:00/0000:00:03.1/0000:06:00.0/0000:07:00.0/0000:08:00.0/hwmon/hwmon4/temp1_input",
+    "format": " {temperatureC}°C",
+    "tooltip-format": "GPU Temperature",
+  },
+  "disk": {
+    "format": "  {percentage_used}%",
+    "states": {
+      "warning": 80,
+      "critical": 90,
+    }
+  },
+  "clock": {
+    "interval": 1,
+    "format": "{:%a %b %d (W%V) %H:%M:%S}",
+    "tooltip-format": "{calendar}",
+    "on-click": "gnome-calendar",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#ffffff'>{}</span>",
+        "days": "<span color='#bbbbbb'>{}</span>",
+        "weeks": "<span color='#888888'>W{:%V}</span>",
+        "weekdays": "<span color='#888888'>{}</span>",
+        "today": "<span color='#ffffff'><u>{}</u></span>"
+      }
+    },
+    "actions":  {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
+  },
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰈈",
+      "deactivated": "󰈉"
+    }
+  },
+  "battery": {
+    "format": "󰁹 {capacity}%",
+    "states": {
+      "warning": 25,
+      "critical": 10,
+    }
+  },
+  "network": {
+    "format": "󰛳",
+    "format-wifi": "  {signalStrength}",
+    "format-disconnected": "󰅛"
+  },
+  "wireplumber": {
+    "format": "{icon} {volume}%",
+    "format-muted": "",
+    "format-icons": ["", "", ""],
+    "on-click": "pavucontrol"
+  },
+  "custom/notification": {
+    "format": "{icon} {0}",
+    "format-icons": {
+      "notification": "󱅫",
+      "none": "󰂜",
+      "dnd-notification": "󰂠",
+      "dnd-none": "󰪓",
+      "inhibited-notification": "󰂛",
+      "inhibited-none": "󰪑",
+      "dnd-inhibited-notification": "󰂛",
+      "dnd-inhibited-none": "󰪑"
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+  "privacy": {
+	"icon-size": 14
+  },
+  "custom/poweroff": {
+    "format": "",
+    "tooltip-format": "Power Off",
+    "on-click": "zenity --question --title 'Power Off' --text 'The system will power off. Are you sure?' --width 300 --icon system-shutdown && poweroff"
+  },
+  "custom/restart": {
+    "format": "󰜉",
+    "tooltip-format": "Restart",
+    "on-click": "zenity --question --title 'Restart' --text 'The system will restart. Are you sure?' --width 300 --icon system-reboot && reboot"
+  },
+  "custom/lock": {
+    "format": "",
+    "tooltip-format": "Lock",
+    "on-click": "swaylock -f"
+  },
+  "custom/suspend": {
+    "format": "󰒲",
+    "tooltip-format": "Suspend",
+    "on-click": "systemctl suspend"
+  },
+  "group/power": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/poweroff",
+      "custom/lock",
+      "custom/suspend",
+      "custom/restart"
+    ],
+    "drawer": {
+      "transition-left-to-right": false
+    }
+  }
+}

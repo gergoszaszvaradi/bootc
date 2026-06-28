@@ -1,0 +1,19 @@
+[window]
+decorations = "None"
+padding = { x = 8, y = 8 }
+
+[font]
+normal = { family = "CascadiaCodeNF", style = "Regular" }
+offset = { x = 0, y = 6 }
+glyph_offset = { x = 0, y = 3 }
+
+[colors.primary]
+background = "#1d1f21"
+foreground = "#c5c8c6"
+
+[cursor]
+style = { shape = "Beam", blinking = "Always" }
+unfocused_hollow = false
+blink_interval = 500
+blink_timeout = 0
+thickness = 0.2

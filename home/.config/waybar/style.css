@@ -1,0 +1,64 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: CascadiaCodeNF, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+window#waybar {
+    background-color: transparent;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+    background-color: rgba(26, 36, 29, 0.75);
+    border-radius: 999px;
+    margin: 5px 8px;
+    padding: 5px;
+}
+
+.module {
+    border-radius: 999px;
+    padding: 0 10px;
+}
+
+#tray menu {
+    background-color: #000000;
+    padding: 10px;
+}
+
+#tray menu>* {
+    padding: 5px;
+    border-radius: 3px;
+}
+
+#tray menu>*:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+#privacy {
+    margin: 0 10px;
+}
+
+#idle_inhibitor,
+#network,
+#custom-lock,
+#custom-poweroff,
+#custom-suspend {
+    padding-right: 14px;
+}
+
+.module:not(#workspaces):not(#tray):hover,
+#tray>*:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.module.warning {
+    background-color: #d9881e;
+}
+
+.module.critical {
+    background-color: #e61705;
+}

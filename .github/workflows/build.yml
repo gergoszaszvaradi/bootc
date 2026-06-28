@@ -1,0 +1,59 @@
+name: Build bootc image
+
+on:
+    push:
+        branches: [main]
+    schedule:
+        - cron: "23 5 * * *"
+    workflow_dispatch:
+
+env:
+    REGISTRY: ghcr.io
+    IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        permissions:
+            contents: read
+            packages: write
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Log in to GHCR
+              uses: redhat-actions/podman-login@v1
+              with:
+                  registry: ${{ env.REGISTRY }}
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Generate image metadata
+              id: meta
+              uses: docker/metadata-action@v5
+              with:
+                  images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+                  tags: |
+                      type=raw,value=latest
+                      type=sha,format=long
+                      type=schedule,pattern={{date 'YYYYMMDD'}}
+
+            - name: Build image
+              id: build
+              uses: redhat-actions/buildah-build@v2
+              with:
+                  containerfiles: ./Containerfile
+                  image: ${{ env.IMAGE_NAME }}
+                  tags: ${{ steps.meta.outputs.tags }}
+                  labels: ${{ steps.meta.outputs.labels }}
+                  oci: true
+
+            - name: Push to GHCR
+              id: push
+              uses: redhat-actions/push-to-registry@v2
+              with:
+                  image: ${{ steps.build.outputs.image }}
+                  tags: ${{ steps.build.outputs.tags }}
+                  registry: ${{ env.REGISTRY }}
