@@ -37,6 +37,7 @@ RUN dnf install -y \
 RUN dnf install -y \
         niri \
         waybar \
+        zenity \
         swaybg \
         swayidle \
         swaylock-effects \
