@@ -18,8 +18,8 @@ RUN dnf install -y \
         "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm" \
         "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm" \
     && dnf clean all
-RUN dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release terra-gpg-keys \
-    && dnf clean all
+# RUN dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release terra-gpg-keys \
+#     && dnf clean all
 RUN dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo \
     && dnf clean all
 
@@ -61,14 +61,14 @@ RUN dnf install -y \
         git \
         clang \
         toolbox \
-        zed \
+        # zed \
         golang-github-jesseduffield-lazygit \
     && dnf clean all
 
 # Set default system configuration
-COPY --chmod=0644 home/.config/alacritty/ /etc/alacritty/
-COPY --chmod=0644 home/.config/niri/ /etc/niri/
-COPY --chmod=0644 home/.config/waybar/ /etc/xdg/waybar/
+COPY --chmod=0644 home/alacritty/.config/alacritty/ /etc/alacritty/
+COPY --chmod=0644 home/niri/.config/niri/ /etc/niri/
+COPY --chmod=0644 home/waybar/.config/waybar/ /etc/xdg/waybar/
 
 # Create the human user
 RUN groupadd -g 1001 ${USERNAME} && \
