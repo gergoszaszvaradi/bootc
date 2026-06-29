@@ -70,13 +70,6 @@ COPY --chmod=0644 home/alacritty/.config/alacritty/ /etc/alacritty/
 COPY --chmod=0644 home/niri/.config/niri/ /etc/niri/
 COPY --chmod=0644 home/waybar/.config/waybar/ /etc/xdg/waybar/
 
-# Configure the user
-RUN usermod \
-    -s /bin/bash \
-    -G\
-        wheel \
-    ${USERNAME}
-
 # Copy local scripts
 COPY --chmod=0755 usr/local/bin/ /usr/local/bin/
 
