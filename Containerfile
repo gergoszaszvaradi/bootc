@@ -18,8 +18,8 @@ RUN dnf install -y \
         "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-${FEDORA_VERSION}.noarch.rpm" \
         "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-${FEDORA_VERSION}.noarch.rpm" \
     && dnf clean all
-# RUN dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release terra-gpg-keys \
-#     && dnf clean all
+RUN dnf install -y --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release terra-gpg-keys \
+    && dnf clean all
 RUN dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo \
     && dnf clean all
 
@@ -40,6 +40,7 @@ RUN dnf install -y \
         zenity \
         swaybg \
         swayidle \
+        swaylock-effects \
         SwayNotificationCenter \
         playerctl \
         cascadia-code-nf-fonts \
@@ -60,6 +61,8 @@ RUN dnf install -y \
         git \
         clang \
         toolbox \
+        zed \
+        golang-github-jesseduffield-lazygit \
     && dnf clean all
 
 # Set default system configuration
@@ -67,11 +70,12 @@ COPY --chmod=0644 home/alacritty/.config/alacritty/ /etc/alacritty/
 COPY --chmod=0644 home/niri/.config/niri/ /etc/niri/
 COPY --chmod=0644 home/waybar/.config/waybar/ /etc/xdg/waybar/
 
-# Create the human user
-RUN groupadd -g 1001 ${USERNAME} && \
-    useradd -u 1001 -g 1001 -M -d /var/home/${USERNAME} -s /bin/bash -G wheel ${USERNAME} && \
-    echo "${USERNAME}:"'$6$RpPbmE2Tx.yA2Qcv$aWV2ijaTF7meCk.maB6Qt3/4hzXM9lBYTlfQRhiOXiYgMtm7FTpAP5tp251qFQKwVUYs8ODMraONetn.p3ghM0' | chpasswd -e
-RUN echo "C /var/home/${USERNAME} 0700 ${USERNAME} ${USERNAME} - /etc/skel" > /usr/lib/tmpfiles.d/home-user.conf
+# Configure the user
+RUN usermod \
+    -s /bin/bash \
+    -G\
+        wheel \
+    ${USERNAME}
 
 # Copy local scripts
 COPY --chmod=0755 usr/local/bin/ /usr/local/bin/
