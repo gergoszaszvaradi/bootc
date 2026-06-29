@@ -40,7 +40,6 @@ RUN dnf install -y \
         zenity \
         swaybg \
         swayidle \
-        swaylock-effects \
         SwayNotificationCenter \
         playerctl \
         cascadia-code-nf-fonts \
@@ -61,8 +60,6 @@ RUN dnf install -y \
         git \
         clang \
         toolbox \
-        # zed \
-        golang-github-jesseduffield-lazygit \
     && dnf clean all
 
 # Set default system configuration
