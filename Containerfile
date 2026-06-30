@@ -25,12 +25,14 @@ RUN dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release
 
 # Install core packages
 RUN dnf install -y \
+        zsh \
         wget \
         fzf \
         ripgrep \
         btop \
         greetd \
         greetd-tuigreet \
+        glibc-langpack-en \
     && dnf clean all
 
 # Install desktop packages
