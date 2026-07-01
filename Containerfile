@@ -33,6 +33,7 @@ RUN dnf install -y \
         greetd \
         greetd-tuigreet \
         glibc-langpack-en \
+        stow \
     && dnf clean all
 
 # Install desktop packages
