@@ -1,0 +1,77 @@
+[
+  {
+    "bindings": {
+      "ctrl-q": null
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "f4 w h": "pane::SplitRight",
+      "f4 w v": "pane::SplitDown",
+      "f4 w w": "pane::CloseActiveItem",
+      "f4 w q": "pane::CloseAllItems",
+      "f4 w f": "workspace::ToggleZoom",
+      "f4 w t": "workspace::NewCenterTerminal",
+      "f4 w j": "pane::JoinIntoNext",
+      "f4 t": "workspace::NewTerminal",
+      "ctrl-e": "workspace::ToggleRightDock",
+      "ctrl-\\": "tab_switcher::Toggle",
+      "f4 p a": "workspace::Open",
+      "f4 p p": "projects::OpenRecent",
+      "f4 p f": "file_finder::Toggle",
+      "f4 g g": [
+        "task::Spawn",
+        {
+          "task_name": "lazygit",
+          "reveal_target": "center"
+        }
+      ],
+      "f4 g e": "diagnostics::Deploy"
+    }
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "f4 p s": "pane::DeploySearch"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-\\": null,
+      "ctrl-up": "editor::MoveToStartOfParagraph",
+      "ctrl-shift-up": "editor::SelectToStartOfParagraph",
+      "ctrl-down": "editor::MoveToEndOfParagraph",
+      "ctrl-shift-down": "editor::SelectToEndOfParagraph",
+      "f4 g l": "go_to_line::Toggle",
+      "f4 g d": "editor::GoToDefinition",
+      "f4 g r": "editor::FindAllReferences",
+      "f4 g i": "editor::GoToImplementation",
+      "f4 .": "editor::ToggleCodeActions",
+      "f4 h": "editor::Hover"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "enter": "project_panel::OpenPermanent",
+      "p": "project_panel::Open",
+      "c f": "project_panel::NewFile",
+      "c d": "project_panel::NewDirectory",
+      "r": "project_panel::Rename",
+      "d": "project_panel::Delete"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-\\": "tab_switcher::ToggleAll"
+    }
+  },
+  {
+    "context": "TabSwitcher",
+    "bindings": {
+      "ctrl-w": "tab_switcher::CloseSelectedItem"
+    }
+  }
+]

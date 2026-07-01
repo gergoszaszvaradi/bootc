@@ -3,7 +3,7 @@ decorations = "None"
 padding = { x = 8, y = 8 }
 
 [font]
-normal = { family = "CascadiaCodeNF", style = "Regular" }
+normal = { family = "CaskaydiaCoveNF", style = "Regular" }
 offset = { x = 0, y = 6 }
 glyph_offset = { x = 0, y = 3 }
 

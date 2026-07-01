@@ -1,3 +1,7 @@
+[[customizations.filesystem]]
+mountpoint = "/"
+minsize = "1900 GiB"
+
 [[customizations.user]]
 name = "gergoszaszvaradi"
 password = "" # openssl passwd -6 "your-password"

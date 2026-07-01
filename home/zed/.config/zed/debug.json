@@ -1,0 +1,9 @@
+[
+  {
+    "label": "GDB",
+    "adapter": "GDB",
+    "request": "launch",
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "program": "./build/bin/main"
+  }
+]

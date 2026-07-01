@@ -1,0 +1,17 @@
+#!/bin/bash
+set -euo pipefail
+
+output=$(bootc switch ghcr.io/gergoszaszvaradi/bootc:latest 2>&1)
+
+if echo "$output" | grep -q "No update available"; then
+    exit 0
+fi
+
+# Notify logged-in users that a new image is staged
+for uid in $(loginctl list-users --no-legend | awk '{print $1}'); do
+    sudo -u "#$uid" \
+        DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$uid/bus" \
+        notify-send -a "Bootc" -i system-software-update \
+        "System update staged" \
+        "A new image has been staged. Reboot to apply."
+done

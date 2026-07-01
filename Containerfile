@@ -8,6 +8,9 @@ ARG USERNAME=gergoszaszvaradi
 # Apply kernel arguments
 COPY --chmod=0644 system/usr/lib/bootc/kargs.d/ /usr/lib/bootc/kargs.d/
 
+# Set timezone
+RUN ln -sf /usr/share/zoneinfo/Europe/Bucharest /etc/localtime
+
 # Configure dnf
 COPY --chmod=0644 system/etc/dnf/dnf.conf /etc/dnf/dnf.conf
 
@@ -32,6 +35,7 @@ RUN dnf install -y \
         btop \
         greetd \
         greetd-tuigreet \
+        gnome-keyring-pam \
         glibc-langpack-en \
         stow \
     && dnf clean all
@@ -46,9 +50,10 @@ RUN dnf install -y \
         swaylock-effects \
         SwayNotificationCenter \
         playerctl \
-        cascadia-code-nf-fonts \
         adwaita-icon-theme \
         xwayland-satellite \
+        xdg-desktop-portal \
+        xdg-desktop-portal-gtk \
         \
         alacritty \
         nautilus \
@@ -68,10 +73,21 @@ RUN dnf install -y \
         golang-github-jesseduffield-lazygit \
     && dnf clean all
 
+# Copy assets
+COPY --chmod=0644 system/usr/share/backgrounds /usr/share/backgrounds
+COPY --chmod=0644 system/usr/share/fonts/caskaydia-cove-nf /usr/share/fonts/caskaydia-cove-nf
+RUN fc-cache -f /usr/share/fonts/caskaydia-cove-nf
+
 # Set default system configuration
 COPY --chmod=0644 home/alacritty/.config/alacritty/ /etc/alacritty/
 COPY --chmod=0644 home/niri/.config/niri/ /etc/niri/
 COPY --chmod=0644 home/waybar/.config/waybar/ /etc/xdg/waybar/
+COPY --chmod=0644 home/fuzzel/.config/fuzzel/ /etc/xdg/fuzzel/
+
+# Set dconf system defaults
+COPY --chmod=0644 system/etc/dconf/profile/user /etc/dconf/profile/user
+COPY --chmod=0644 system/etc/dconf/db/local.d/ /etc/dconf/db/local.d/
+RUN dconf update
 
 # Copy local scripts
 COPY --chmod=0755 system/usr/local/bin/ /usr/local/bin/
@@ -79,9 +95,15 @@ COPY --chmod=0755 system/usr/local/bin/ /usr/local/bin/
 # Copy systemd services
 COPY --chmod=0644 system/usr/lib/systemd/system/ /usr/lib/systemd/system/
 
+# Enable automatic bootc upgrades
+RUN systemctl enable bootc-upgrade.timer
+
 # Setup greetd
 COPY --chmod=0644 system/etc/greetd/config.toml /etc/greetd/config.toml
 RUN systemctl enable greetd.service
+
+# Enable gnome-keyring-daemon socket activation (auto-unlock via PAM on login)
+RUN systemctl --global enable gnome-keyring-daemon.socket
 
 # Validate the container
 RUN bootc container lint

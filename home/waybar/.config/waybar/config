@@ -58,6 +58,7 @@
     "tooltip-format": "GPU Temperature",
   },
   "disk": {
+    "path": "/dev/nvme0n1p3",
     "format": "  {percentage_used}%",
     "states": {
       "warning": 80,
@@ -108,7 +109,7 @@
     "format-disconnected": "󰅛"
   },
   "wireplumber": {
-    "format": "{icon} {volume}%",
+    "format": "{icon}  {volume}%",
     "format-muted": "",
     "format-icons": ["", "", ""],
     "on-click": "pavucontrol"
