@@ -28,6 +28,7 @@ window#waybar {
 #tray menu {
     background-color: #000000;
     padding: 10px;
+    color: #dddddd;
 }
 
 #tray menu>* {

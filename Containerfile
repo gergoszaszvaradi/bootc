@@ -50,6 +50,7 @@ RUN dnf install -y \
         swaylock-effects \
         SwayNotificationCenter \
         playerctl \
+        grimshot \
         adwaita-icon-theme \
         xwayland-satellite \
         xdg-desktop-portal \
@@ -57,11 +58,21 @@ RUN dnf install -y \
         \
         alacritty \
         nautilus \
+        solaar \
         gnome-calculator \
         file-roller \
         simple-scan \
+        loupe \
+        decibels \
+        evince \
+        pinta \
+        vlc \
         brave-browser \
         pavucontrol \
+        stremio-service \
+        discord \
+        lpf-spotify-client \
+        fragments \
     && dnf clean all
 
 # Install development packages
@@ -71,6 +82,13 @@ RUN dnf install -y \
         toolbox \
         zed \
         golang-github-jesseduffield-lazygit \
+    && dnf clean all
+
+# Install gaming packages
+RUN dnf install -y \
+        wine \
+        lutris \
+        steam \
     && dnf clean all
 
 # Copy assets
