@@ -36,6 +36,7 @@ RUN dnf install -y \
         greetd \
         greetd-tuigreet \
         gnome-keyring-pam \
+        kernel-modules-extra \
         glibc-langpack-en \
         stow \
     && dnf clean all

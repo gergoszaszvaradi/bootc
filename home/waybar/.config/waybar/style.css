@@ -42,6 +42,7 @@ window#waybar {
 
 #privacy {
     margin: 0 10px;
+    color: #dddddd;
 }
 
 #idle_inhibitor,

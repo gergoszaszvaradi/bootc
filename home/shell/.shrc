@@ -11,7 +11,7 @@ PATH="$PATH:$HOME/go/bin:$HOME/.emacs.d/bin"
 
 export PATH
 
-alias z='zeditor .'
+alias z='zed .'
 alias lg=lazygit
 alias c=clear
 
