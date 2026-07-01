@@ -105,5 +105,10 @@ RUN systemctl enable greetd.service
 # Enable gnome-keyring-daemon socket activation (auto-unlock via PAM on login)
 RUN systemctl --global enable gnome-keyring-daemon.socket
 
+# Enable SSH agent via gnome-keyring
+RUN sed -i '/^OnlyShowIn/d' /etc/xdg/autostart/gnome-keyring-ssh.desktop \
+    && mkdir -p /usr/lib/environment.d \
+    && echo 'SSH_AUTH_SOCK=${XDG_RUNTIME_DIR}/keyring/ssh' > /usr/lib/environment.d/10-ssh-agent.conf
+
 # Validate the container
 RUN bootc container lint
