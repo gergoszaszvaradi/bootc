@@ -1,0 +1,4 @@
+[[customizations.user]]
+name = "gergoszaszvaradi"
+password = "" # openssl passwd -6 "your-password"
+groups = ["wheel"]

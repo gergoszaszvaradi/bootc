@@ -6,10 +6,10 @@ ARG FEDORA_VERSION
 ARG USERNAME=gergoszaszvaradi
 
 # Apply kernel arguments
-COPY --chmod=0644 usr/lib/bootc/kargs.d/ /usr/lib/bootc/kargs.d/
+COPY --chmod=0644 system/usr/lib/bootc/kargs.d/ /usr/lib/bootc/kargs.d/
 
 # Configure dnf
-COPY --chmod=0644 etc/dnf/dnf.conf /etc/dnf/dnf.conf
+COPY --chmod=0644 system/etc/dnf/dnf.conf /etc/dnf/dnf.conf
 
 # Add dnf repositories
 RUN dnf install -y dnf5-plugins \
@@ -73,13 +73,13 @@ COPY --chmod=0644 home/niri/.config/niri/ /etc/niri/
 COPY --chmod=0644 home/waybar/.config/waybar/ /etc/xdg/waybar/
 
 # Copy local scripts
-COPY --chmod=0755 usr/local/bin/ /usr/local/bin/
+COPY --chmod=0755 system/usr/local/bin/ /usr/local/bin/
 
 # Copy systemd services
-COPY --chmod=0644 usr/lib/systemd/system/ /usr/lib/systemd/system/
+COPY --chmod=0644 system/usr/lib/systemd/system/ /usr/lib/systemd/system/
 
 # Setup greetd
-COPY --chmod=0644 etc/greetd/config.toml /etc/greetd/config.toml
+COPY --chmod=0644 system/etc/greetd/config.toml /etc/greetd/config.toml
 RUN systemctl enable greetd.service
 
 # Validate the container
