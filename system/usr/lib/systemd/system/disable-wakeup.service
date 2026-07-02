@@ -1,0 +1,10 @@
+[Unit]
+Description=Disable GPP0 and XHC0 ACPI wakeup sources
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "echo GPP0 > /proc/acpi/wakeup && echo XHC0 > /proc/acpi/wakeup"
+
+[Install]
+WantedBy=multi-user.target

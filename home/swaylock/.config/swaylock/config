@@ -1,0 +1,12 @@
+clock
+indicator
+indicator-radius=250
+indicator-thickness=5
+line-color=00000000
+separator-color=00000000
+ring-color=1a241dbf
+# color=000000
+image=/usr/share/backgrounds/wallpaper.jpg
+inside-color=1a241d62
+font=CaskaydiaCoveNF
+text-color=ffffff

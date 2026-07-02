@@ -102,6 +102,7 @@ RUN fc-cache -f /usr/share/fonts/caskaydia-cove-nf
 COPY --chmod=0644 home/alacritty/.config/alacritty/ /etc/alacritty/
 COPY --chmod=0644 home/niri/.config/niri/ /etc/niri/
 COPY --chmod=0644 home/waybar/.config/waybar/ /etc/xdg/waybar/
+COPY --chmod=0644 home/swaylock/.config/swaylock/ /etc/swaylock/
 COPY --chmod=0644 home/fuzzel/.config/fuzzel/ /etc/xdg/fuzzel/
 
 # Set dconf system defaults
@@ -117,6 +118,9 @@ COPY --chmod=0644 system/usr/lib/systemd/system/ /usr/lib/systemd/system/
 
 # Enable automatic bootc upgrades
 RUN systemctl enable bootc-upgrade.timer
+
+# Disable ACPI wakeup sources that cause spurious wake
+RUN systemctl enable disable-wakeup.service
 
 # Setup greetd
 COPY --chmod=0644 system/etc/greetd/config.toml /etc/greetd/config.toml
