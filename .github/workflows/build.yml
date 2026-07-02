@@ -30,10 +30,10 @@ jobs:
                   swap-storage: false
 
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
             - name: Log in to GHCR
-              uses: redhat-actions/podman-login@v1
+              uses: redhat-actions/podman-login@4934294ad0449894bcd1e9f191899d7292469603 # v1.7
               with:
                   registry: ${{ env.REGISTRY }}
                   username: ${{ github.actor }}
@@ -41,7 +41,7 @@ jobs:
 
             - name: Generate image metadata
               id: meta
-              uses: docker/metadata-action@v5
+              uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5.10.0
               with:
                   images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
                   tags: |
@@ -51,7 +51,7 @@ jobs:
 
             - name: Build image
               id: build
-              uses: redhat-actions/buildah-build@v2
+              uses: redhat-actions/buildah-build@7a95fa7ee0f02d552a32753e7414641a04307056 # v2.13
               with:
                   containerfiles: ./Containerfile
                   image: ${{ env.IMAGE_NAME }}
@@ -61,7 +61,7 @@ jobs:
 
             - name: Push to GHCR
               id: push
-              uses: redhat-actions/push-to-registry@v2
+              uses: redhat-actions/push-to-registry@5ed88d269cf581ea9ef6dd6806d01562096bee9c # v2.8
               with:
                   image: ${{ steps.build.outputs.image }}
                   tags: ${{ steps.build.outputs.tags }}

@@ -80,6 +80,7 @@ RUN dnf install -y \
 RUN dnf install -y \
         git \
         clang \
+        clang-tools-extra \
         toolbox \
         zed \
         golang-github-jesseduffield-lazygit \
