@@ -60,6 +60,7 @@ RUN dnf install -y \
         alacritty \
         nautilus \
         solaar \
+        easyeffects \
         gnome-calculator \
         file-roller \
         simple-scan \
