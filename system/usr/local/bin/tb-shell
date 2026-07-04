@@ -4,7 +4,7 @@ CONTAINER_NAME="tb-shell-$RANDOM"
 
 KEEP=0
 RUN_CMD=""
-PACKAGES=()
+PACKAGES=("zsh")
 
 # Load packages from .tb-shell if exists
 if [[ -f ".tb-shell" ]]; then

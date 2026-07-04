@@ -3,7 +3,6 @@ ARG FEDORA_VERSION=44
 FROM quay.io/fedora/fedora-bootc:${FEDORA_VERSION}
 
 ARG FEDORA_VERSION
-ARG USERNAME=gergoszaszvaradi
 
 # Apply kernel arguments
 COPY --chmod=0644 system/usr/lib/bootc/kargs.d/ /usr/lib/bootc/kargs.d/
@@ -119,10 +118,8 @@ COPY --chmod=0755 system/usr/local/bin/ /usr/local/bin/
 # Copy systemd services
 COPY --chmod=0644 system/usr/lib/systemd/system/ /usr/lib/systemd/system/
 
-# Enable automatic bootc upgrades
+# Enable systemd services
 RUN systemctl enable bootc-upgrade.timer
-
-# Disable ACPI wakeup sources that cause spurious wake
 RUN systemctl enable disable-wakeup.service
 
 # Setup greetd
