@@ -88,8 +88,6 @@ RUN dnf install -y \
 
 # Install gaming packages
 RUN dnf install -y \
-        wine \
-        lutris \
         steam \
     && dnf clean all
 
