@@ -52,6 +52,7 @@ RUN dnf install -y \
         playerctl \
         grimshot \
         adwaita-icon-theme \
+        maple-fonts \
         xwayland-satellite \
         xdg-desktop-portal \
         xdg-desktop-portal-gtk \
