@@ -1,3 +1,4 @@
+stow -d home -t ~ alacritty
 stow -d home -t ~ shell
 stow -d home -t ~ waybar
 stow -d home -t ~ niri
