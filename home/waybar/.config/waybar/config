@@ -1,7 +1,6 @@
 {
   "layer": "top",
   "modules-left": [
-    "sway/workspaces",
     "tray",
     "mpris"
   ],
@@ -42,6 +41,7 @@
   },
   "memory": {
     "format": "  {percentage}%",
+    "tooltip-format": "{used}GiB / {total}GiB",
     "states": {
       "warning": 75,
       "critical": 90,
@@ -62,6 +62,7 @@
   "disk": {
     "path": "/sysroot",
     "format": "  {percentage_used}%",
+    "tooltip-format": "{used} / {total}",
     "states": {
       "warning": 80,
       "critical": 90,
@@ -108,7 +109,11 @@
   "network": {
     "format": "󰛳",
     "format-wifi": "  {signalStrength}",
-    "format-disconnected": "󰅛"
+    "format-disconnected": "󰅛",
+    "tooltip-format": "{ifname} | {ipaddr} |  {bandwidthUpBytes}  {bandwidthDownBytes}",
+    "tooltip-format-wifi": "{ifname} | {ipaddr} | {essid} |  {bandwidthUpBytes}  {bandwidthDownBytes}",
+    "tooltip-format-disconnected": "{ifname} | Disconnected",
+    "on-click": "alacritty msg create-window -e nmtui"
   },
   "wireplumber": {
     "format": "{icon}  {volume}%",
