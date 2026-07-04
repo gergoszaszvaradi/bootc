@@ -29,6 +29,7 @@ RUN dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release
 RUN dnf install -y \
         zsh \
         wget \
+        jq \
         fzf \
         ripgrep \
         btop \
@@ -84,6 +85,11 @@ RUN dnf install -y \
         toolbox \
         zed \
         golang-github-jesseduffield-lazygit \
+    && dnf clean all
+
+# Install MultiViewer for F1 (fetches latest RPM from their API)
+RUN MULTIVIEWER_RPM_URL=$(curl -s https://api.multiviewer.app/api/v1/releases/latest | jq -r '.downloads[] | select(.platform == "linux_rpm") | .url') \
+    && dnf install -y "${MULTIVIEWER_RPM_URL}" \
     && dnf clean all
 
 # Install gaming packages
