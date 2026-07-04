@@ -73,7 +73,6 @@ RUN dnf install -y \
         pavucontrol \
         stremio-service \
         discord \
-        lpf-spotify-client \
         fragments \
     && dnf clean all
 
