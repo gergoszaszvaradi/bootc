@@ -1,4 +1,7 @@
 {
+    "edit_predictions": {
+        "mode": "subtle"
+    },
     "cli_default_open_behavior": "new_window",
     "window_decorations": "server",
     "centered_layout": {

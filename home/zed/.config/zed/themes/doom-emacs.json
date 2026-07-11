@@ -175,6 +175,11 @@
             "font_style": null,
             "font_weight": null
           },
+          "label": {
+            "color": "#969896",
+            "font_style": null,
+            "font_weight": null
+          },
           "constant": {
             "color": "#de935f",
             "font_style": null,
