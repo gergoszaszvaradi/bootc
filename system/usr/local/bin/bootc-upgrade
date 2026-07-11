@@ -1,11 +1,21 @@
 #!/bin/bash
 set -euo pipefail
 
-output=$(bootc switch ghcr.io/gergoszaszvaradi/bootc:latest 2>&1)
+current_image=$(bootc status --booted --format json | jq -r '.status.booted.image.image.image')
 
-if echo "$output" | grep -q "No update available"; then
+if [[ "$current_image" != "ghcr.io/gergoszaszvaradi/bootc:latest" ]]; then
+    echo "current booted image is not ghcr.io/gergoszaszvaradi/bootc, switching..."
+    bootc switch ghcr.io/gergoszaszvaradi/bootc:latest
+fi
+
+if bootc upgrade --check | grep -q "No changes"; then
+    echo "No changes detected, exiting."
     exit 0
 fi
+
+bootc upgrade
+
+echo "Upgrade successful, notifying users..."
 
 # Notify logged-in users that a new image is staged
 for uid in $(loginctl list-users --no-legend | awk '{print $1}'); do
