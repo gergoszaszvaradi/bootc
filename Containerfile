@@ -117,7 +117,8 @@ COPY --chmod=0644 system/etc/dconf/db/local.d/ /etc/dconf/db/local.d/
 RUN dconf update
 
 # Disable default bootc upgrader (not ideal in desktop environments since it could reboot silently every 8 hours)
-RUN systemctl disable bootc-fetch-apply-updates.timer
+RUN systemctl mask bootc-fetch-apply-updates.timer
+RUN systemctl mask bootc-fetch-apply-updates.service
 
 # Copy local scripts
 COPY --chmod=0755 system/usr/local/bin/ /usr/local/bin/
