@@ -53,6 +53,7 @@ RUN dnf install -y \
         playerctl \
         grimshot \
         adwaita-icon-theme \
+        google-noto-color-emoji-fonts \
         xwayland-satellite \
         xdg-desktop-portal \
         xdg-desktop-portal-gtk \
@@ -100,9 +101,9 @@ RUN dnf install -y \
 # Copy assets
 COPY --chmod=0644 system/usr/share/backgrounds /usr/share/backgrounds
 COPY --chmod=0644 system/usr/share/fonts/caskaydia-cove-nf /usr/share/fonts/caskaydia-cove-nf
-COPY --chmod=0644 system/usr/share/fonts/noto-color-emoji /usr/share/fonts/noto-color-emoji
+# COPY --chmod=0644 system/usr/share/fonts/noto-color-emoji /usr/share/fonts/noto-color-emoji
 RUN fc-cache -f /usr/share/fonts/caskaydia-cove-nf
-RUN fc-cache -f /usr/share/fonts/noto-color-emoji
+# RUN fc-cache -f /usr/share/fonts/noto-color-emoji
 
 # Set default system configuration
 COPY --chmod=0644 home/alacritty/.config/alacritty/ /etc/alacritty/
