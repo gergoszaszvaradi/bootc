@@ -96,6 +96,7 @@ RUN MULTIVIEWER_RPM_URL=$(curl -s https://api.multiviewer.app/api/v1/releases/la
 # Install gaming packages
 RUN dnf install -y \
         steam \
+        protontricks \
     && dnf clean all
 
 # Copy assets
