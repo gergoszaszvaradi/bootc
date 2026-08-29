@@ -97,6 +97,7 @@ RUN MULTIVIEWER_RPM_URL=$(curl -s https://api.multiviewer.app/api/v1/releases/la
 RUN dnf install -y \
         steam \
         protontricks \
+        xpadneo \
     && dnf clean all
 
 # Copy assets
