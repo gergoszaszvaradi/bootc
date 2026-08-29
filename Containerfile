@@ -97,8 +97,13 @@ RUN MULTIVIEWER_RPM_URL=$(curl -s https://api.multiviewer.app/api/v1/releases/la
 RUN dnf install -y \
         steam \
         protontricks \
-        xpadneo \
     && dnf clean all
+
+# Install akmod modules
+RUN rpm-ostree install \
+        akmod-xpadneo && \
+    akmods --force && \
+    rpm-ostree cleanup -m
 
 # Copy assets
 COPY --chmod=0644 system/usr/share/backgrounds /usr/share/backgrounds
