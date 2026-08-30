@@ -99,11 +99,11 @@ RUN dnf install -y \
         protontricks \
     && dnf clean all
 
-# Install akmod modules
-RUN rpm-ostree install \
-        akmod-xpadneo && \
-    akmods --force && \
-    rpm-ostree cleanup -m
+RUN dnf copr enable \
+        atim/xpadneo \
+    && dnf install -y \
+        xpadneo \
+    && dnf clean all
 
 # Copy assets
 COPY --chmod=0644 system/usr/share/backgrounds /usr/share/backgrounds
@@ -118,6 +118,9 @@ COPY --chmod=0644 home/niri/.config/niri/ /etc/niri/
 COPY --chmod=0644 home/waybar/.config/waybar/ /etc/xdg/waybar/
 COPY --chmod=0644 home/swaylock/.config/swaylock/ /etc/swaylock/
 COPY --chmod=0644 home/fuzzel/.config/fuzzel/ /etc/xdg/fuzzel/
+
+# Set bluetooth configuration
+COPY --chmod=0644 system/etc/bluetooth/main.conf /etc/bluetooth/main.conf
 
 # Set dconf system defaults
 COPY --chmod=0644 system/etc/dconf/profile/user /etc/dconf/profile/user
