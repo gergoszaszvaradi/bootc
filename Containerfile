@@ -75,7 +75,6 @@ RUN dnf install -y \
         stremio-service \
         discord \
         fragments \
-        cura \
     && dnf clean all
 
 # Install development packages
