@@ -81,6 +81,7 @@ RUN dnf install -y \
 # Install development packages
 RUN dnf install -y \
         git \
+        gh \
         clang \
         clang-tools-extra \
         gf \
