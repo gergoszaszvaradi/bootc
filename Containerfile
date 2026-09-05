@@ -37,6 +37,7 @@ RUN dnf install -y \
         greetd-tuigreet \
         gnome-keyring-pam \
         kernel-modules-extra \
+        NetworkManager-wifi \
         glibc-langpack-en \
         stow \
     && dnf clean all
@@ -92,6 +93,18 @@ RUN dnf install -y \
 RUN MULTIVIEWER_RPM_URL=$(curl -s https://api.multiviewer.app/api/v1/releases/latest | jq -r '.downloads[] | select(.platform == "linux_rpm") | .url') \
     && dnf install -y "${MULTIVIEWER_RPM_URL}" \
     && dnf clean all
+
+# Install binaries
+RUN wget -qO /usr/local/bin/cosign https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 \
+    && chmod 0755 /usr/local/bin/cosign
+RUN AGE_URL=$(curl -s https://api.github.com/repos/FiloSottile/age/releases/latest \
+        | jq -r '.assets[] | select(.name | endswith("linux-amd64.tar.gz")) | .browser_download_url') \
+    && wget -qO- "${AGE_URL}" | tar -xz -C /usr/local/bin --strip-components=1 age/age age/age-keygen \
+    && chmod 0755 /usr/local/bin/age /usr/local/bin/age-keygen
+RUN SOPS_URL=$(curl -s https://api.github.com/repos/getsops/sops/releases/latest \
+        | jq -r '.assets[] | select(.name | endswith("linux.amd64")) | .browser_download_url') \
+    && wget -qO /usr/local/bin/sops "${SOPS_URL}" \
+    && chmod 0755 /usr/local/bin/sops
 
 # Install gaming packages
 RUN dnf install -y \
