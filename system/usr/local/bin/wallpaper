@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if pkill -x -u "$(id -u)" 'swaybg|swayidle'; then
+    sleep 0.2
+fi
+
+WALLPAPER_PATH=$(ls -d /usr/share/backgrounds/fall/* | shuf -n1)
+
+swaybg --mode fill --image "$WALLPAPER_PATH" &
+swayidle -w timeout 300 "swaylock -f -i $WALLPAPER_PATH" timeout 600 'systemctl suspend' before-sleep "swaylock -f -i $WALLPAPER_PATH"
