@@ -4,7 +4,8 @@ if pkill -x -u "$(id -u)" 'swaybg|swayidle'; then
     sleep 0.2
 fi
 
-WALLPAPER_PATH=$(ls -d /usr/share/backgrounds/fall/* | shuf -n1)
+mkdir -p ~/.local/share/backgrounds
+cp -f $(ls -d /usr/share/backgrounds/fall/* | shuf -n1) ~/.local/share/backgrounds/current
 
-swaybg --mode fill --image "$WALLPAPER_PATH" &
-swayidle -w timeout 300 "swaylock -f -i $WALLPAPER_PATH" timeout 600 'systemctl suspend' before-sleep "swaylock -f -i $WALLPAPER_PATH"
+swaybg --mode fill --image ~/.local/share/backgrounds/current &
+swayidle -w timeout 300 "swaylock -f" timeout 600 'systemctl suspend' before-sleep "swaylock -f"
