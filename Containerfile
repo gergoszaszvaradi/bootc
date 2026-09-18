@@ -42,6 +42,24 @@ RUN dnf install -y \
         stow \
     && dnf clean all
 
+# niri-git: 26.04 only does DMA-BUF screencasts, which breaks SHM-only
+# capture clients (Discord's capture_linux). SHM support landed post-26.04.
+# priority=1 is required: the COPR's 0.0.git.NNNN versions sort below 26.04.
+# @todo: move back to the stock niri package once the fix is fully released.
+RUN printf '%s\n' \
+        '[copr:copr.fedorainfracloud.org:yalter:niri-git]' \
+        'name=Copr repo for niri-git owned by yalter' \
+        'baseurl=https://download.copr.fedorainfracloud.org/results/yalter/niri-git/fedora-$releasever-$basearch/' \
+        'type=rpm-md' \
+        'gpgcheck=1' \
+        'gpgkey=https://download.copr.fedorainfracloud.org/results/yalter/niri-git/pubkey.gpg' \
+        'repo_gpgcheck=0' \
+        'enabled=1' \
+        'enabled_metadata=1' \
+        'priority=1' \
+        > /etc/yum.repos.d/_copr_yalter_niri-git.repo \
+    && dnf clean all
+
 # Install desktop packages
 RUN dnf install -y \
         niri \
