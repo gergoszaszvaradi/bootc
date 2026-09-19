@@ -138,8 +138,8 @@ RUN dnf copr enable \
     && dnf clean all
 
 # Copy assets
-COPY --chmod=0644 system/usr/share/backgrounds /usr/share/backgrounds
-RUN chmod -R u=rwX,go=rX /usr/share/backgrounds
+COPY --chmod=0644 system/usr/share/backgrounds/default.jpg /usr/share/backgrounds/default.jpg
+COPY --chmod=0644 system/usr/share/backgrounds/fall /usr/share/backgrounds/fall
 COPY --chmod=0644 system/usr/share/fonts/caskaydia-cove-nf /usr/share/fonts/caskaydia-cove-nf
 # COPY --chmod=0644 system/usr/share/fonts/noto-color-emoji /usr/share/fonts/noto-color-emoji
 RUN fc-cache -f /usr/share/fonts/caskaydia-cove-nf
